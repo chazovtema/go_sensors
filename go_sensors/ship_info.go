@@ -13,7 +13,17 @@ type BusId struct {
 }
 
 type Feature struct {
-	Name   string
-	Number int
-	Type   int
+	Name            string
+	Number          int
+	Type            SensorsFeatureType
+	FirstSubfeature int
+	Padding         int
+}
+
+type SubFeature struct {
+	Name    string
+	Number  int
+	Type    SensorsSubfeatureType
+	Mapping int
+	Flags   uint
 }

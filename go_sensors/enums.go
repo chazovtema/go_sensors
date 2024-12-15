@@ -1,24 +1,32 @@
 package go_sensors
 
+/*
+#cgo LDFLAGS: -lsensors
+#include <sensors/sensors.h>
+#include <stdlib.h>
+
+*/
+import "C"
+
 import "math"
 
 type SensorsFeatureType int
 
 const (
-	SensorsFeatureIn SensorsFeatureType = iota
-	SensorsFeatureFan
-	SensorsFeatureTemp
-	SensorsFeaturePower
-	SensorsFeatureEnergy
-	SensorsFeatureCurr
-	SensorsFeatureHumidity
-	SensorsFeatureMaxMain
-	SensorsFeatureVid = 0x10
-	SensorsFeatureIntrusion
-	SensorsFeatureMaxOther
-	SensorsFeatureBeepEnable = 0x18
-	SensorsFeatureMax
-	SensorsFeatureUnknown = math.MaxInt32
+	SensorsFeatureIn         SensorsFeatureType = C.SENSORS_FEATURE_IN
+	SensorsFeatureFan        SensorsFeatureType = C.SENSORS_FEATURE_FAN
+	SensorsFeatureTemp       SensorsFeatureType = C.SENSORS_FEATURE_TEMP
+	SensorsFeaturePower      SensorsFeatureType = C.SENSORS_FEATURE_POWER
+	SensorsFeatureEnergy     SensorsFeatureType = C.SENSORS_FEATURE_ENERGY
+	SensorsFeatureCurr       SensorsFeatureType = C.SENSORS_FEATURE_CURR
+	SensorsFeatureHumidity   SensorsFeatureType = C.SENSORS_FEATURE_HUMIDITY
+	SensorsFeatureMaxMain    SensorsFeatureType = C.SENSORS_FEATURE_MAX_MAIN
+	SensorsFeatureVid        SensorsFeatureType = C.SENSORS_FEATURE_VID
+	SensorsFeatureIntrusion  SensorsFeatureType = C.SENSORS_FEATURE_INTRUSION
+	SensorsFeatureMaxOther   SensorsFeatureType = C.SENSORS_FEATURE_MAX_OTHER
+	SensorsFeatureBeepEnable SensorsFeatureType = C.SENSORS_FEATURE_BEEP_ENABLE
+	SensorsFeatureMax        SensorsFeatureType = C.SENSORS_FEATURE_MAX
+	SensorsFeatureUnknown    SensorsFeatureType = C.SENSORS_FEATURE_UNKNOWN
 )
 
 type SensorsSubfeatureType int
@@ -32,17 +40,17 @@ const (
 	SensorsSubfeatureInAverage
 	SensorsSubfeatureInLowest
 	SensorsSubfeatureInHighest
-	SensorsSubfeatureInAlarm = (SensorsFeatureIn << 8) | 0x80
+	SensorsSubfeatureInAlarm
 	SensorsSubfeatureInMinAlarm
 	SensorsSubfeatureInMaxAlarm
 	SensorsSubfeatureInBeep
 	SensorsSubfeatureInLcritAlarm
 	SensorsSubfeatureInCritAlarm
 
-	SensorsSubfeatureFanInput = SensorsFeatureFan << 8
+	SensorsSubfeatureFanInput
 	SensorsSubfeatureFanMin
 	SensorsSubfeatureFanMax
-	SensorsSubfeatureFanAlarm = (SensorsFeatureFan << 8) | 0x80
+	SensorsSubfeatureFanAlarm
 	SensorsSubfeatureFanFault
 	SensorsSubfeatureFanDiv
 	SensorsSubfeatureFanBeep
@@ -50,7 +58,7 @@ const (
 	SensorsSubfeatureFanMinAlarm
 	SensorsSubfeatureFanMaxAlarm
 
-	SensorsSubfeatureTempInput = SensorsFeatureTemp << 8
+	SensorsSubfeatureTempInput
 	SensorsSubfeatureTempMax
 	SensorsSubfeatureTempMaxHyst
 	SensorsSubfeatureTempMin

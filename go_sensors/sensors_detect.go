@@ -4,6 +4,7 @@ package go_sensors
 #cgo LDFLAGS: -lsensors
 #include <sensors/sensors.h>
 #include <stdlib.h>
+
 */
 import (
 	"C"
@@ -128,4 +129,23 @@ func GetFeatures(chip Chip) []Feature {
 	}
 
 	return features
+}
+
+func GetSubfeatures(chip Chip, feature Feature) []SubFeature {
+	cChip := goChip2C(chip)
+	defer C.free(unsafe.Pointer(cChip.path))
+	defer C.free(unsafe.Pointer(cChip.prefix))
+	cFeature := goFeature2C(feature)
+	defer C.free(unsafe.Pointer(cFeature.name))
+	var subfeatureNum C.int
+	var subfeature *C.struct_sensors_subfeature
+	subfeatures := make([]SubFeature, 0)
+	for {
+		subfeature = C.sensors_get_all_subfeatures(&cChip, &cFeature, &subfeatureNum)
+		if subfeature == nil {
+			break
+		}
+		subfeatures = append(subfeatures, cSubFeature2Go(*subfeature))
+	}
+	return subfeatures
 }
