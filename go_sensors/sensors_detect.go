@@ -100,6 +100,18 @@ func CleanUp() {
 	C.sensors_cleanup()
 }
 
+func DetectChips() []Chip {
+	var chips []Chip = make([]Chip, 0)
+	for i := 0; ; i++ {
+		chip, err := DetectChip(i)
+		if err != nil {
+			break
+		}
+		chips = append(chips, chip)
+	}
+	return chips
+}
+
 func DetectChip(chipNumber int) (Chip, error) {
 	var chip *C.struct_sensors_chip_name
 	cChipNumber := C.int(chipNumber)
@@ -139,13 +151,20 @@ func GetSubfeatures(chip Chip, feature Feature) []SubFeature {
 	defer C.free(unsafe.Pointer(cFeature.name))
 	var subfeatureNum C.int
 	var subfeature *C.struct_sensors_subfeature
+	var subfeatureValue C.double
 	subfeatures := make([]SubFeature, 0)
 	for {
 		subfeature = C.sensors_get_all_subfeatures(&cChip, &cFeature, &subfeatureNum)
 		if subfeature == nil {
 			break
 		}
-		subfeatures = append(subfeatures, cSubFeature2Go(*subfeature))
+		execute_code := C.sensors_get_value(&cChip, subfeature.number, &subfeatureValue)
+		if execute_code != 0 {
+			panic("Can't get value")
+		}
+		goSubFeature := cSubFeature2Go(*subfeature)
+		goSubFeature.Value = float64(subfeatureValue)
+		subfeatures = append(subfeatures, goSubFeature)
 	}
 	return subfeatures
 }

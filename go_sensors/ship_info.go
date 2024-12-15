@@ -26,4 +26,5 @@ type SubFeature struct {
 	Type    SensorsSubfeatureType
 	Mapping int
 	Flags   uint
+	Value   float64
 }
