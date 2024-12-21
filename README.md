@@ -1,6 +1,6 @@
 # Go sensors
 
-Low level [libsensors](https://packages.debian.org/sid/libsensors-dev) wrapper. Unlike other packages, this one uses a dynamic library instead of calling lmsensors in the shell.
+Low level [libsensors](https://packages.debian.org/sid/libsensors-dev) wrapper. Unlike other packages, this one uses a dynamic library instead of calling lmsensors from the shell.
 
 # Dependencies
 
