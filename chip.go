@@ -9,6 +9,7 @@ type Chip struct {
 
 func (c *Chip) Refresh() {
 	wrappedFeatures := getFeatures(c.chip)
+	c.Features = make([]Feature, len(wrappedFeatures))
 	for i, feature := range wrappedFeatures {
 		c.Features[i] = Feature{
 			Name:        feature.Name,

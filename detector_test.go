@@ -12,6 +12,6 @@ func TestNewDetector(t *testing.T) {
 	}
 	defer detector.Close()
 	chips := detector.Detect()
-	// chip := chips[0]
-	fmt.Println(chips)
+	chip := chips[0]
+	fmt.Println(chip.Features[0])
 }
