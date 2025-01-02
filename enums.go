@@ -10,26 +10,26 @@ import "C"
 
 import "math"
 
-type SensorsFeatureType int
+type sensorsFeatureType int
 
 const (
-	SensorsFeatureIn         SensorsFeatureType = C.SENSORS_FEATURE_IN
-	SensorsFeatureFan        SensorsFeatureType = C.SENSORS_FEATURE_FAN
-	SensorsFeatureTemp       SensorsFeatureType = C.SENSORS_FEATURE_TEMP
-	SensorsFeaturePower      SensorsFeatureType = C.SENSORS_FEATURE_POWER
-	SensorsFeatureEnergy     SensorsFeatureType = C.SENSORS_FEATURE_ENERGY
-	SensorsFeatureCurr       SensorsFeatureType = C.SENSORS_FEATURE_CURR
-	SensorsFeatureHumidity   SensorsFeatureType = C.SENSORS_FEATURE_HUMIDITY
-	SensorsFeatureMaxMain    SensorsFeatureType = C.SENSORS_FEATURE_MAX_MAIN
-	SensorsFeatureVid        SensorsFeatureType = C.SENSORS_FEATURE_VID
-	SensorsFeatureIntrusion  SensorsFeatureType = C.SENSORS_FEATURE_INTRUSION
-	SensorsFeatureMaxOther   SensorsFeatureType = C.SENSORS_FEATURE_MAX_OTHER
-	SensorsFeatureBeepEnable SensorsFeatureType = C.SENSORS_FEATURE_BEEP_ENABLE
-	SensorsFeatureMax        SensorsFeatureType = C.SENSORS_FEATURE_MAX
-	SensorsFeatureUnknown    SensorsFeatureType = C.SENSORS_FEATURE_UNKNOWN
+	SensorsFeatureIn         sensorsFeatureType = C.SENSORS_FEATURE_IN
+	SensorsFeatureFan        sensorsFeatureType = C.SENSORS_FEATURE_FAN
+	SensorsFeatureTemp       sensorsFeatureType = C.SENSORS_FEATURE_TEMP
+	SensorsFeaturePower      sensorsFeatureType = C.SENSORS_FEATURE_POWER
+	SensorsFeatureEnergy     sensorsFeatureType = C.SENSORS_FEATURE_ENERGY
+	SensorsFeatureCurr       sensorsFeatureType = C.SENSORS_FEATURE_CURR
+	SensorsFeatureHumidity   sensorsFeatureType = C.SENSORS_FEATURE_HUMIDITY
+	SensorsFeatureMaxMain    sensorsFeatureType = C.SENSORS_FEATURE_MAX_MAIN
+	SensorsFeatureVid        sensorsFeatureType = C.SENSORS_FEATURE_VID
+	SensorsFeatureIntrusion  sensorsFeatureType = C.SENSORS_FEATURE_INTRUSION
+	SensorsFeatureMaxOther   sensorsFeatureType = C.SENSORS_FEATURE_MAX_OTHER
+	SensorsFeatureBeepEnable sensorsFeatureType = C.SENSORS_FEATURE_BEEP_ENABLE
+	SensorsFeatureMax        sensorsFeatureType = C.SENSORS_FEATURE_MAX
+	SensorsFeatureUnknown    sensorsFeatureType = C.SENSORS_FEATURE_UNKNOWN
 )
 
-type SensorsSubfeatureType int
+type sensorsSubfeatureType int
 
 const (
 	SensorsSubfeatureInInput = SensorsFeatureIn << 8

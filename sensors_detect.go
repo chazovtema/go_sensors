@@ -15,22 +15,10 @@ import (
 	"unsafe"
 )
 
-func Init() error {
-	if ret := C.sensors_init(nil); ret != 0 {
-		return fmt.Errorf("can not init sensors package")
-	} else {
-		return nil
-	}
-}
-
-func CleanUp() {
-	C.sensors_cleanup()
-}
-
-func DetectChips() []Chip {
-	var chips []Chip = make([]Chip, 0)
+func detectChips() []goChip {
+	var chips []goChip = make([]goChip, 0)
 	for i := 0; ; i++ {
-		chip, err := DetectChip(i)
+		chip, err := detectChip(i)
 		if err != nil {
 			break
 		}
@@ -39,7 +27,7 @@ func DetectChips() []Chip {
 	return chips
 }
 
-func DetectChip(chipNumber int) (Chip, error) {
+func detectChip(chipNumber int) (goChip, error) {
 	var chip *C.struct_sensors_chip_name
 	cChipNumber := C.int(chipNumber)
 	cChipNumberPtr := &cChipNumber
@@ -48,17 +36,17 @@ func DetectChip(chipNumber int) (Chip, error) {
 		goChip := cChip2Go(*chip)
 		return goChip, nil
 	} else {
-		return Chip{}, fmt.Errorf("chip %d not found", chipNumber)
+		return goChip{}, fmt.Errorf("chip %d not found", chipNumber)
 	}
 }
 
-func GetFeatures(chip Chip) []Feature {
+func getFeatures(chip goChip) []goFeature {
 	cChip := goChip2C(chip)
 	defer C.free(unsafe.Pointer(cChip.path))
 	defer C.free(unsafe.Pointer(cChip.prefix))
 	var featureNum C.int
 	var feature *C.struct_sensors_feature
-	features := make([]Feature, 0)
+	features := make([]goFeature, 0)
 	for {
 		feature = C.sensors_get_features(&cChip, &featureNum)
 		if feature == nil {
@@ -70,7 +58,7 @@ func GetFeatures(chip Chip) []Feature {
 	return features
 }
 
-func GetSubfeatures(chip Chip, feature Feature) []SubFeature {
+func getSubfeatures(chip goChip, feature goFeature) []goSubFeature {
 	cChip := goChip2C(chip)
 	defer C.free(unsafe.Pointer(cChip.path))
 	defer C.free(unsafe.Pointer(cChip.prefix))
@@ -79,7 +67,7 @@ func GetSubfeatures(chip Chip, feature Feature) []SubFeature {
 	var subfeatureNum C.int
 	var subfeature *C.struct_sensors_subfeature
 	var subfeatureValue C.double
-	subfeatures := make([]SubFeature, 0)
+	subfeatures := make([]goSubFeature, 0)
 	for {
 		subfeature = C.sensors_get_all_subfeatures(&cChip, &cFeature, &subfeatureNum)
 		if subfeature == nil {
