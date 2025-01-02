@@ -10,17 +10,17 @@ import (
 	"C"
 )
 
-func cChip2Go(chip C.struct_sensors_chip_name) Chip {
-	goChip := Chip{
+func cChip2Go(chip C.struct_sensors_chip_name) goChip {
+	goChip := goChip{
 		Prefix: C.GoString(chip.prefix),
-		Bus:    BusId{Type: int(chip.bus._type), Nr: int(chip.bus.nr)},
+		Bus:    goBusId{Type: int(chip.bus._type), Nr: int(chip.bus.nr)},
 		Addr:   int(chip.addr),
 		Path:   C.GoString(chip.path),
 	}
 	return goChip
 }
 
-func goChip2C(chip Chip) C.struct_sensors_chip_name {
+func goChip2C(chip goChip) C.struct_sensors_chip_name {
 	cChip := C.struct_sensors_chip_name{
 		prefix: C.CString(chip.Prefix),
 		bus: C.struct_sensors_bus_id{
@@ -33,18 +33,18 @@ func goChip2C(chip Chip) C.struct_sensors_chip_name {
 	return cChip
 }
 
-func cFeature2Go(feature C.struct_sensors_feature) Feature {
-	goFeature := Feature{
+func cFeature2Go(feature C.struct_sensors_feature) goFeature {
+	goFeature := goFeature{
 		Name:            C.GoString(feature.name),
 		Number:          int(feature.number),
-		Type:            SensorsFeatureType(feature._type),
+		Type:            sensorsFeatureType(feature._type),
 		FirstSubfeature: int(feature.first_subfeature),
 		Padding:         int(feature.padding1),
 	}
 	return goFeature
 }
 
-func goFeature2C(feature Feature) C.struct_sensors_feature {
+func goFeature2C(feature goFeature) C.struct_sensors_feature {
 	cFeature := C.struct_sensors_feature{
 		name:             C.CString(feature.Name),
 		number:           C.int(feature.Number),
@@ -55,18 +55,18 @@ func goFeature2C(feature Feature) C.struct_sensors_feature {
 	return cFeature
 }
 
-func cSubFeature2Go(subfeature C.struct_sensors_subfeature) SubFeature {
-	goSubFeature := SubFeature{
+func cSubFeature2Go(subfeature C.struct_sensors_subfeature) goSubFeature {
+	goSubFeature := goSubFeature{
 		Name:    C.GoString(subfeature.name),
 		Number:  int(subfeature.number),
-		Type:    SensorsSubfeatureType(subfeature._type),
+		Type:    sensorsSubfeatureType(subfeature._type),
 		Mapping: int(subfeature.mapping),
 		Flags:   uint(subfeature.flags),
 	}
 	return goSubFeature
 }
 
-func goSubFeature2C(subfeature SubFeature) C.struct_sensors_subfeature {
+func goSubFeature2C(subfeature goSubFeature) C.struct_sensors_subfeature {
 	cSubFeature := C.struct_sensors_subfeature{
 		name:    C.CString(subfeature.Name),
 		number:  C.int(subfeature.Number),

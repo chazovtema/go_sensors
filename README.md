@@ -15,27 +15,18 @@ package main
 
 import (
 	"fmt"
-	"time"
-	"github.com/chazovtema/go_sensors"
+	"github.com/chazovtema/go_sensors/v2"
 )
 
 
 func main() {
-	go_sensors.Init()
-	defer go_sensors.CleanUp()
-	chip, _ := go_sensors.DetectChip(0)
-	var lastTemp float64 = 0
-	for {
-		features := go_sensors.GetFeatures(chip)
-		feature := features[0]
-		subfeatures := go_sensors.GetSubfeatures(chip, feature)
-		subfeature := subfeatures[0]
-		if subfeature.Value != lastTemp {
-			fmt.Println(subfeature.Value)
-			lastTemp = subfeature.Value
-		}
-		time.Sleep(time.Second) 
+	detector, err := go_sensors.NewDetector()
+	if err != nil {
+		panic(err)
 	}
-
+	defer detector.Close()
+	chips := detector.Detect()
+	chip := chips[0]
+	fmt.Println(chip.Features[0])
 }
 ```
